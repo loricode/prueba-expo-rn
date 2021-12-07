@@ -12,7 +12,7 @@ import { Answer } from '../../../models/answers/answer';
    switch(action.type){
      case ADD_QUESTIONS:
         return {
-          answers: state.answers,
+          answers:[],
           results: action.payload
         }
       case ADD_ANSWER:

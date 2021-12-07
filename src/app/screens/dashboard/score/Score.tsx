@@ -8,10 +8,8 @@ import {
    Text,
    TouchableOpacity 
    } from 'react-native'
-import { REMOVE_ANSWER } from '../../../store/actions/question/question';
 
-
-   //context
+//context
 import { questionContext } from '../../../store/contexts/question/questionContext';
 import { Item } from '../components/Item';
 
@@ -19,7 +17,7 @@ import { Item } from '../components/Item';
 export const Score = ({navigation}:any) => {
 
    const [ score, setScore ] = useState(0)
-   const { state, dispatch } = useContext(questionContext);
+   const { state } = useContext(questionContext);
 
    useEffect(()=>{
       myScore();
@@ -29,7 +27,7 @@ export const Score = ({navigation}:any) => {
   
       let count = 0;
 
-      for(let i = 0; i< state.answers.length; i++){
+      for(let i = 0; i< state.results.length; i++){
          if( state.results[i].correct_answer === state.answers[i].correct ){
             count++
          }   
@@ -43,9 +41,8 @@ export const Score = ({navigation}:any) => {
       return ( <Item item={item} /> );
   }
 
-  const playAgain = () => {
-     dispatch({ type:REMOVE_ANSWER })
-     navigation.navigate('Welcome')
+  const playAgain = async () => {
+      navigation.replace('Home')
   }
 
    return (

@@ -22,6 +22,7 @@ import { QuestionRepository } from "../../../services/repositories";
 import { ADD_ANSWER } from "../../../store/actions/question/question";
 
 export const Home = ({ navigation }: any) => {
+
   const [ util, setUtil] = useState({ loading: false, position: 0 });
 
   const { state, dispatch } = useContext(questionContext);
@@ -33,12 +34,14 @@ export const Home = ({ navigation }: any) => {
   useEffect(() => {
     (async () => {
       try {
+        setUtil({ position:0, loading: false });
         const { data } = await QuestionRepository.getQuestions();
         dispatch({ type: ADD_QUESTIONS, payload: data.results });
       } catch (err) {
         console.log(err);
       }
     })();
+
   }, []);
 
   const changePosition = () => {
@@ -62,7 +65,7 @@ export const Home = ({ navigation }: any) => {
         if (util.position <= 9) {
           setUtil({ position: util.position + 1, loading: false });
         }
-      }, 800);
+      }, 600);
 
       if (util.position === 9) {
         setUtil({ ...util, loading: false });
@@ -71,10 +74,6 @@ export const Home = ({ navigation }: any) => {
     }
   };
 
-  const clearState =()=>{
-    dispatch({ type:REMOVE_ANSWER })
-    navigation.navigate("Welcome")
-  }
 
   return util.loading ? (
     <View style={[styles.container, styles.horizontal]}>
@@ -83,12 +82,10 @@ export const Home = ({ navigation }: any) => {
   ) : (
     <SafeAreaView style={{ flex: 1 }}>
       <Text style={styles.title}>
-        {state.results[util.position] && state.results[util.position].category}
+        {state.results[util.position] && (state.results[util.position].category)}
       </Text>
 
       <View style={styles.container}>
-
-      {util.position === 10 ? (null) :(
         <View style={styles.card}>
           <Text style={styles.textQuestion}>
             {state.results[util.position] &&
@@ -110,21 +107,15 @@ export const Home = ({ navigation }: any) => {
               <Text style={styles.textTrue}>True</Text>
             </TouchableOpacity>
           </View>
-        </View>)}
+        </View>
 
         <View style={styles.paginator}>
           <View>
-            {util.position === 10 ? (
-              <TouchableOpacity
-               
-                onPress={clearState}>
-                <Text style={styles.textTrue}>Go Welcome</Text>
-              </TouchableOpacity>
-            ) : (
+        
               <Text style={styles.text}>
-                {util.position + 1 + " of " + state.results.length}
+                {(util.position + 1) + " of " + state.results.length}
               </Text>
-            )}
+  
           </View>
         </View>
       </View>
