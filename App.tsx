@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useReducer } from 'react';
+
+import { AppRouter } from './src/app/routers/AppRouter';
+
+import { questionContext } from './src/app/store/contexts/question/questionContext';
+import { questionReducer } from './src/app/store/reducers/question/questionReducer';
+
+import { Results } from './src/app/models/response/questions/question';
+import { Answer } from './src/app/models/answers/answer';
+
+export type State = {
+  answers:Answer[],
+  results:Results[]
+};
+
+
+export const initialState:State = {
+  answers:[],
+  results:[]
+};
 
 export default function App() {
+
+  const [state, dispatch] = useReducer(questionReducer, initialState);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <questionContext.Provider value={{state, dispatch}}>
+     <AppRouter />
+    </questionContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
