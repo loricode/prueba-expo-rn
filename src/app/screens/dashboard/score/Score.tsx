@@ -9,10 +9,11 @@ import {
    TouchableOpacity 
    } from 'react-native'
 
+import { CommonActions } from '@react-navigation/native';
+
 //context
 import { questionContext } from '../../../store/contexts/question/questionContext';
 import { Item } from '../components/Item';
-
 
 export const Score = ({navigation}:any) => {
 
@@ -41,8 +42,9 @@ export const Score = ({navigation}:any) => {
       return ( <Item item={item} /> );
   }
 
-  const playAgain = async () => {
-      navigation.replace('Home')
+  const playAgain = () => {
+    navigation.navigate("Home");
+   
   }
 
    return (

@@ -32,15 +32,14 @@ export const Home = ({ navigation }: any) => {
   });
 
   useEffect(() => {
-    (async () => {
-      try {
+
+    const unsubscribe = navigation.addListener('focus', async() => {
         setUtil({ position:0, loading: false });
         const { data } = await QuestionRepository.getQuestions();
         dispatch({ type: ADD_QUESTIONS, payload: data.results });
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+    });
+
+    return unsubscribe;
 
   }, []);
 
@@ -48,10 +47,12 @@ export const Home = ({ navigation }: any) => {
     setUtil({ ...util, loading: true });
   };
 
+  
+
   const handlerAnswer = (answer: string) => {
     if (util.position <= 9) {
       changePosition();
-
+     
       dispatch({
         type: ADD_ANSWER,
         payload: {
