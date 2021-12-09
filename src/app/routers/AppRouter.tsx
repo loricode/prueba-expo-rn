@@ -13,6 +13,7 @@ export const AppRouter = ( ) =>{
    return (
       <NavigationContainer>
       <Stack.Navigator>
+        
       <Stack.Screen name="Welcome" component={Welcome} 
         options={{ title:'',  headerShown:false }}
       />
@@ -26,7 +27,6 @@ export const AppRouter = ( ) =>{
         name="Score"
         component={Score}
        />
-   
    
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,4 +1,3 @@
-
 export type Results = {
    category:string,
    type:string,

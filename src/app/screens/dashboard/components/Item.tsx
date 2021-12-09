@@ -6,7 +6,6 @@ import { decode } from 'html-entities';
 
 export const Item = ({item}:any) => {
 
-
    const { state } = useContext(questionContext);
 
    const isCorrect = (answer:string, id:string):boolean => {

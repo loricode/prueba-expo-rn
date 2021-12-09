@@ -12,19 +12,17 @@ import { useFonts } from "expo-font";
 import { decode } from "html-entities";
 
 //action
-import { ADD_QUESTIONS, REMOVE_ANSWER } from "../../../store/actions";
+import { ADD_QUESTIONS, ADD_ANSWER } from "../../../store/actions";
 
 //context
 import { questionContext } from "../../../store/contexts/question/questionContext";
 
 //service
 import { QuestionRepository } from "../../../services/repositories";
-import { ADD_ANSWER } from "../../../store/actions/question/question";
 
 export const Home = ({ navigation }: any) => {
 
   const [ util, setUtil] = useState({ loading: false, position: 0 });
-
   const { state, dispatch } = useContext(questionContext);
 
   useFonts({
@@ -43,15 +41,11 @@ export const Home = ({ navigation }: any) => {
 
   }, []);
 
-  const changePosition = () => {
-    setUtil({ ...util, loading: true });
-  };
-
-  
+  const loading = () => { setUtil({ ...util, loading: true }) };
 
   const handlerAnswer = (answer: string) => {
     if (util.position <= 9) {
-      changePosition();
+      loading();
      
       dispatch({
         type: ADD_ANSWER,
@@ -80,7 +74,7 @@ export const Home = ({ navigation }: any) => {
     <View style={[styles.container, styles.horizontal]}>
       <ActivityIndicator size="large" color="#00ff00" />
     </View>
-  ) : (
+    ) : (
     <SafeAreaView style={{ flex: 1 }}>
       <Text style={styles.title}>
         {state.results[util.position] && (state.results[util.position].category)}
@@ -89,22 +83,20 @@ export const Home = ({ navigation }: any) => {
       <View style={styles.container}>
         <View style={styles.card}>
           <Text style={styles.textQuestion}>
-            {state.results[util.position] &&
-              decode(state.results[util.position].question)}
+            {state.results[util.position] &&(
+              decode(state.results[util.position].question))}
           </Text>
 
           <View style={styles.buttons}>
             <TouchableOpacity
               style={styles.buttonFalse}
-              onPress={() => handlerAnswer("False")}
-            >
+              onPress={() => handlerAnswer("False")}>
               <Text style={styles.textFalse}>False</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.buttonTrue}
-              onPress={() => handlerAnswer("True")}
-            >
+              onPress={() => handlerAnswer("True")}>
               <Text style={styles.textTrue}>True</Text>
             </TouchableOpacity>
           </View>
@@ -112,15 +104,13 @@ export const Home = ({ navigation }: any) => {
 
         <View style={styles.paginator}>
           <View>
-        
               <Text style={styles.text}>
                 {(util.position + 1) + " of " + state.results.length}
-              </Text>
-  
+           </Text>
           </View>
         </View>
-      </View>
 
+      </View>
       <StatusBar backgroundColor="white" />
     </SafeAreaView>
   );
@@ -142,7 +132,6 @@ const styles = StyleSheet.create({
     height: "25%",
     borderWidth: 1,
     padding: 10,
-
     alignItems: "center",
     borderColor: "black",
   },
