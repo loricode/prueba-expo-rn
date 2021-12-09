@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-
 import { questionContext } from '../../../store/contexts/question/questionContext';
 import { decode } from 'html-entities';
 
-export const Item = ({item}:any) => {
+export const Item = ({ item }:any) => {
 
    const { state } = useContext(questionContext);
 
@@ -17,7 +16,6 @@ export const Item = ({item}:any) => {
       
       return success;
    }
-
 
    return (
       <View style={styles.container}>

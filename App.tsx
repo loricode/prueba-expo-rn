@@ -13,7 +13,6 @@ export type State = {
   results:Results[]
 };
 
-
 export const initialState:State = {
   answers:[],
   results:[]

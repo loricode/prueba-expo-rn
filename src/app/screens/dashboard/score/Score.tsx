@@ -1,5 +1,4 @@
 import React, { useEffect , useContext, useState } from 'react';
-
 import { 
    StyleSheet,
    StatusBar,
@@ -9,11 +8,10 @@ import {
    TouchableOpacity 
    } from 'react-native'
 
-import { CommonActions } from '@react-navigation/native';
+import { Item } from '../components/Item';
 
 //context
 import { questionContext } from '../../../store/contexts/question/questionContext';
-import { Item } from '../components/Item';
 
 export const Score = ({navigation}:any) => {
 
@@ -33,42 +31,32 @@ export const Score = ({navigation}:any) => {
             count++
          }   
       }
-
       setScore(count);
    }
 
-
-   const renderItem = ({ item }:any) => {
-      return ( <Item item={item} /> );
-  }
-
-  const playAgain = () => {
-    navigation.navigate("Home");
-   
-  }
+  const renderItem = ({ item }:any) => ( <Item item={item} /> );
+  
+  const playAgain = () => { navigation.navigate("Home") }
 
    return (
       <SafeAreaView style={styles.container}>
          
          <Text style={styles.title}>You Scored { score } / { state.answers.length }</Text>
 
-      <FlatList
-        data={state.answers}
-        renderItem={renderItem}
-        keyExtractor={(_, key) => key.toString()}
-      />
+         <FlatList
+         data={state.answers}
+         renderItem={renderItem}
+         keyExtractor={(_, key) => key.toString()}
+         />
 
-      <TouchableOpacity  
-       style={styles.button}
-       onPress={playAgain}
-      >
-         <Text style={styles.textButton}>play again?</Text>
-      </TouchableOpacity>
+         <TouchableOpacity style={styles.button} onPress={playAgain}>
+            <Text style={styles.textButton}>play again?</Text>
+         </TouchableOpacity>
+
         <StatusBar backgroundColor="white" />
       </SafeAreaView>
    );
 }
-
 
 const styles = StyleSheet.create({
    container:{
